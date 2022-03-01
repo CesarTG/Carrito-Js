@@ -1,0 +1,38 @@
+[
+    {
+      "precio": 1200,
+      "id": 1,
+      "title": "Remera Beso",
+      "imagen": "imagenes/reme-beso.jpg"
+    },
+    {
+      "precio": 1250,
+      "id": 2,
+      "title": "Remera Beso 2",
+      "imagen": "imagenes/reme-beso2.jpg"
+    },
+    {
+      "precio": 1500,
+      "id": 3,
+      "title": "Remere Ardidas",
+      "imagen": "imagenes/reme-adidas.jpg"
+    },
+    {
+      "precio": 1750,
+      "id": 4,
+      "title": "Remera Ardidas 2",
+      "imagen": "imagenes/reme-adidas2.jpg"
+    },
+    {
+      "precio": 990,
+      "id": 5,
+      "title": "Remera Destiny",
+      "imagen": "imagenes/reme-des.jpg"
+    },
+    {
+      "precio": 1100,
+      "id": 6,
+      "title": "Remera Black",
+      "imagen": "imagenes/reme-negra.jpg"
+    }
+  ]
