@@ -8,12 +8,11 @@ const fragment = document.createDocumentFragment()
 let carrito = {}
 
 // Eventos
-// El evento DOMContentLoaded es disparado cuando el documento HTML ha sido completamente cargado y parseado
 document.addEventListener('DOMContentLoaded', e => { fetchData() });
 cards.addEventListener('click', e => { addCarrito(e) });
 items.addEventListener('click', e => { btnAumentarDisminuir(e) })
 
-// Traer productos
+// Cargar Json
 const fetchData = async () => {
     const res = await fetch('catalogo.json');
     const data = await res.json()
@@ -21,7 +20,7 @@ const fetchData = async () => {
     pintarCards(data)
 }
 
-// Pintar productos
+// crear Cards
 const pintarCards = data => {
     data.forEach(item => {
         templateCard.querySelector('h5').textContent = item.title
@@ -37,28 +36,25 @@ const pintarCards = data => {
 // Agregar al carrito
 const addCarrito = e => {
     if (e.target.classList.contains('btn-primary')) {
-        // console.log(e.target.dataset.id)
-        // console.log(e.target.parentElement)
         setCarrito(e.target.parentElement)
     }
     e.stopPropagation()
 }
 
 const setCarrito = item => {
-    // console.log(item)
     const producto = {
         title: item.querySelector('h5').textContent,
         precio: item.querySelector('p').textContent,
         id: item.querySelector('button').dataset.id,
         cantidad: 1
     }
-    // console.log(producto)
+
     if (carrito.hasOwnProperty(producto.id)) {
         producto.cantidad = carrito[producto.id].cantidad + 1
     }
 
     carrito[producto.id] = { ...producto }
-    
+
     pintarCarrito()
 }
 
@@ -70,8 +66,8 @@ const pintarCarrito = () => {
         templateCarrito.querySelectorAll('td')[0].textContent = producto.title
         templateCarrito.querySelectorAll('td')[1].textContent = producto.cantidad
         templateCarrito.querySelector('span').textContent = producto.precio * producto.cantidad
-        
-        //botones
+
+        //boton
         templateCarrito.querySelector('.btn-success').dataset.id = producto.id
         templateCarrito.querySelector('.btn-danger').dataset.id = producto.id
 
@@ -85,19 +81,18 @@ const pintarCarrito = () => {
 
 const pintarFooter = () => {
     footer.innerHTML = ''
-    
+
     if (Object.keys(carrito).length === 0) {
         footer.innerHTML = `
         <th scope="row" colspan="5">Carrito vacío</th>
         `
         return
     }
-    
-    // sumar cantidad y sumar totales
-    const nCantidad = Object.values(carrito).reduce((acc, { cantidad }) => acc + cantidad, 0)
-    const nPrecio = Object.values(carrito).reduce((acc, {cantidad, precio}) => acc + cantidad * precio ,0)
-    // console.log(nPrecio)
 
+    // sumaratoria productos
+    const nCantidad = Object.values(carrito).reduce((acc, { cantidad }) => acc + cantidad, 0)
+    const nPrecio = Object.values(carrito).reduce((acc, { cantidad, precio }) => acc + cantidad * precio, 0)
+    
     templateFooter.querySelectorAll('td')[0].textContent = nCantidad
     templateFooter.querySelector('span').textContent = nPrecio
 
@@ -115,7 +110,7 @@ const pintarFooter = () => {
 }
 
 const btnAumentarDisminuir = e => {
-    // console.log(e.target.classList.contains('btn-info'))
+    
     if (e.target.classList.contains('btn-success')) {
         const producto = carrito[e.target.dataset.id]
         producto.cantidad++
@@ -129,7 +124,7 @@ const btnAumentarDisminuir = e => {
         if (producto.cantidad === 0) {
             delete carrito[e.target.dataset.id]
         } else {
-            carrito[e.target.dataset.id] = {...producto}
+            carrito[e.target.dataset.id] = { ...producto }
         }
         pintarCarrito()
     }
