@@ -15,8 +15,7 @@ items.addEventListener('click', e => { btnAumentarDisminuir(e) })
 // Cargar Json
 const fetchData = async () => {
     const res = await fetch('catalogo.json');
-    const data = await res.json()
-    // console.log(data)
+    const data = await res.json()    
     pintarCards(data)
 }
 
@@ -55,10 +54,10 @@ const setCarrito = item => {
 
     carrito[producto.id] = { ...producto }
 
-    pintarCarrito()
+    crearCarrito()
 }
 
-const pintarCarrito = () => {
+const crearCarrito = () => {
     items.innerHTML = ''
 
     Object.values(carrito).forEach(producto => {
@@ -104,7 +103,7 @@ const pintarFooter = () => {
     const boton = document.querySelector('#vaciar-carrito')
     boton.addEventListener('click', () => {
         carrito = {}
-        pintarCarrito()
+        crearCarrito()
     })
 
 }
@@ -115,7 +114,7 @@ const btnAumentarDisminuir = e => {
         const producto = carrito[e.target.dataset.id]
         producto.cantidad++
         carrito[e.target.dataset.id] = { ...producto }
-        pintarCarrito()
+        crearCarrito()
     }
 
     if (e.target.classList.contains('btn-danger')) {
@@ -126,7 +125,7 @@ const btnAumentarDisminuir = e => {
         } else {
             carrito[e.target.dataset.id] = { ...producto }
         }
-        pintarCarrito()
+        crearCarrito()
     }
     e.stopPropagation()
 }
